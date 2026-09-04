@@ -1,0 +1,756 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: Outfit, system-ui, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  width: 100%;
+}
+
+/* Edge/IE render their own reveal control on top of our toggle button. */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-strong-password-auto-fill-button {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.container {
+  width: 100% !important;
+  max-width: none !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-left: 3.5rem !important;
+    padding-right: 3.5rem !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+.rich-text h2 {
+  @apply text-lg font-semibold mt-5 mb-2;
+}
+
+.rich-text p {
+  @apply text-gray-600 leading-relaxed mb-3;
+}
+
+.rich-text ol {
+  @apply list-decimal ml-5 text-gray-600 space-y-1;
+}
+
+.dev-mode-stripes {
+  background-color: #fffaf5;
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(249, 115, 22, 0.03) 0px,
+      rgba(249, 115, 22, 0.03) 4px,
+      transparent 4px,
+      transparent 10px
+    ),
+    linear-gradient(to bottom, #ffffff 0%, #fff1e2 100%);
+}
+
+.page-shell {
+  background-color: #ffffff;
+}
+
+/* ---------------------------------------------------------------
+   Dark theme
+
+   The app is written with a light Tailwind palette. Instead of a
+   dark: variant on every element, the light utilities used across
+   the app are remapped once here. Tokens follow the approved
+   dark-mode mockup.
+   --------------------------------------------------------------- */
+
+.dark {
+  --bg: #262626;
+  --surface: #363636;
+  --surface-2: #252528;
+  --border: #2e2e32;
+  --text: #f5f5f5;
+  --text-dim: #b0b0b0;
+  --text-faint: #8a8a8e;
+  --blue: #4fc3f7;
+  --blue-bg: #0d2a38;
+  --green: #34d399;
+  --green-bg: #0f2a1f;
+  --red: #ff4d6d;
+  --red-bg: #2a1218;
+  --hero: #0a1929;
+}
+
+@layer base {
+  html.dark {
+    color-scheme: dark;
+  }
+
+  .dark body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+  .dark *,
+  .dark ::before,
+  .dark ::after {
+    border-color: var(--border);
+  }
+
+  .dark input,
+  .dark textarea,
+  .dark select,
+  .dark option {
+    background-color: var(--surface-2);
+    color: var(--text);
+  }
+}
+
+.dark .page-shell {
+  background-color: var(--bg);
+}
+
+/* Surfaces */
+.dark .bg-white {
+  background-color: var(--surface);
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-50\/60,
+.dark .bg-gray-100 {
+  background-color: var(--surface-2);
+}
+
+.dark .bg-gray-300 {
+  background-color: var(--border);
+}
+
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .theme-toggle:hover {
+  background-color: #2c2c30;
+}
+
+/* Chrome that sits above the page background */
+.app-header {
+  background-color: #ffffff;
+}
+
+.surface-card {
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 0 0 0.5px #d1d5db;
+}
+
+.dark .app-header {
+  background-color: #363636;
+}
+
+.dark .app-sidebar {
+  background-color: #2B2B2B;
+}
+
+.dark .surface-card {
+  background-color: #363636;
+  border: none;
+  box-shadow: 0 0 0 0.5px #666666;
+}
+
+.surface-card :is(th, td) {
+  box-shadow: inset 0 -0.2px 0 #d1d5db;
+}
+
+.dark .surface-card :is(th, td) {
+  box-shadow: inset 0 -0.2px 0 #666666;
+}
+
+.dark .app-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.dark .promo-band {
+  background-color: #213D50;
+  border: none;
+  color: #ffffff;
+}
+
+.dark .promo-band h1,
+.dark .promo-band .text-gray-900 {
+  color: #ffffff;
+}
+
+.dark .hero-band {
+  background-image: linear-gradient(to right, #3b0764, #1e1b4b, #312e81);
+}
+
+.dark .hero-search {
+  background-color: #ffffff;
+  border: none;
+  color: #4b5563;
+}
+
+.dark .hero-search input {
+  background-color: transparent;
+  color: #4b5563;
+}
+
+.dark .hero-search ::placeholder {
+  color: #9ca3af;
+}
+
+.dark .hero-search .icon-adaptive {
+  filter: none;
+}
+
+/* Job-detail banner, matching the mockup's jd-hero */
+.dark .bg-sky-50 {
+  background-color: transparent;
+  background-image: linear-gradient(120deg, #0a1929, #121212);
+}
+
+.dark .border-sky-400 {
+  border-color: var(--border);
+}
+
+/* Dark-on-light buttons have to invert instead of getting darker */
+.dark .bg-black,
+.dark .bg-\[\#2F3037\] {
+  background-color: var(--text);
+  color: #12141a;
+}
+
+.dark .hover\:bg-black:hover {
+  background-color: #ffffff;
+}
+
+.dark .bg-primary {
+  background-color: var(--blue);
+}
+
+.hero-search-btn,
+.dark .hero-search-btn {
+  background-color: #007AFF;
+  color: #ffffff;
+}
+
+.dark .border-primary {
+  border-color: var(--blue);
+}
+
+.dark .text-primary {
+  color: var(--blue);
+}
+
+/* Text */
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700 {
+  color: var(--text);
+}
+
+.dark .text-gray-600,
+.dark .text-gray-500 {
+  color: var(--text-dim);
+}
+
+.dark .text-gray-400 {
+  color: var(--text-faint);
+}
+
+.dark .placeholder\:text-gray-400::placeholder,
+.dark ::placeholder {
+  color: var(--text-faint);
+}
+
+.dark .rich-text p,
+.dark .rich-text ol {
+  color: var(--text-dim);
+}
+
+/* Borders */
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-gray-400 {
+  border-color: var(--border);
+}
+
+.dark .focus\:border-gray-500:focus {
+  border-color: var(--blue);
+}
+
+/* Accent tints */
+.dark .bg-blue-50,
+.dark .bg-blue-100 {
+  background-color: var(--blue-bg);
+}
+
+.dark .bg-red-50 {
+  background-color: var(--red-bg);
+}
+
+.dark .bg-green-50,
+.dark .bg-green-100 {
+  background-color: var(--green-bg);
+}
+
+.dark .border-blue-200 {
+  border-color: #1a4a5c;
+}
+
+.dark .border-red-200 {
+  border-color: #4a2030;
+}
+
+.dark .border-green-400 {
+  border-color: #1d4a36;
+}
+
+.dark .text-blue-600,
+.dark .text-blue-500,
+.dark .text-blue-400 {
+  color: var(--blue);
+}
+
+.dark .text-red-500 {
+  color: var(--red);
+}
+
+.dark .text-green-600 {
+  color: var(--green);
+}
+
+/* Marquee edge fades sit on the page background */
+.dark .from-white {
+  --tw-gradient-from: var(--bg) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(18 18 18 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark .to-transparent {
+  --tw-gradient-to: rgb(18 18 18 / 0) var(--tw-gradient-to-position);
+}
+
+.dark .dev-mode-stripes {
+  background-color: #fffaf5;
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(249, 115, 22, 0.03) 0px,
+      rgba(249, 115, 22, 0.03) 4px,
+      transparent 4px,
+      transparent 10px
+    ),
+    linear-gradient(to bottom, #ffffff 0%, #fff1e2 100%);
+}
+
+.dark .theme-toggle {
+  border-color: var(--border);
+  color: var(--text);
+  background-color: var(--surface-2);
+}
+
+.location-tag {
+  border: none;
+  box-shadow: 0 0 0 0.5px #93c5fd;
+}
+
+.level-tag {
+  background-color: #fff7ed;
+  border: none;
+  box-shadow: 0 0 0 0.5px #ff8a65;
+}
+
+.dark .location-tag {
+  background-color: transparent;
+  border: none;
+  color: #4fc3f7;
+  box-shadow: 0 0 0 0.5px #4fc3f7;
+}
+
+.dark .level-tag {
+  background-color: transparent;
+  border: none;
+  color: #ff8a65;
+  box-shadow: 0 0 0 0.5px #ff8a65;
+}
+
+.dark .bg-black\/40 {
+  background-color: rgb(0 0 0 / 0.6);
+}
+
+/* Brand logo tiles keep a light backing: most company artwork is
+   dark and would disappear on a dark surface. */
+.logo-tile {
+  background-image: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 50%, #f5f3ff 100%);
+  border-color: #c7d2fe;
+}
+
+.dark .logo-tile {
+  background-image: none;
+  background-color: #e8eaee;
+  border-color: var(--border);
+}
+
+.company-logo-slot {
+  display: inline-flex;
+  align-items: center;
+  width: 58px;
+  flex-shrink: 0;
+}
+
+.company-logo {
+  height: 16px;
+  width: auto;
+  max-width: 72px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.company-logo-wide {
+  height: 12px;
+  max-width: 56px;
+}
+
+.company-logo-sm {
+  height: 10px;
+  max-width: 44px;
+}
+
+.job-card .company-logo {
+  height: 28px;
+  max-width: 96px;
+}
+
+.job-card .company-logo-wide {
+  height: 22px;
+  max-width: 88px;
+}
+
+.job-card .company-logo-sm {
+  height: 16px;
+  max-width: 58px;
+}
+
+.company-logo-walmart {
+  height: 13px;
+  max-width: 52px;
+}
+
+.job-card .company-logo-walmart {
+  height: 20px;
+  max-width: 72px;
+}
+
+/* Monochrome UI icons are near-black SVGs, so flatten and lighten
+   them. Multi-colour brand logos are deliberately left untouched. */
+.dark .icon-adaptive {
+  filter: brightness(0) invert(0.85);
+}
+
+/* Native checkboxes render as dark-on-dark without this */
+.dark input[type="checkbox"] {
+  accent-color: var(--blue);
+}
+
+/* Latest jobs cards and their buttons. box-shadow is used because
+   .dark * remaps every border-color to --border, which disappears on #2B2B2B. */
+.job-card {
+  background-color: #ffffff;
+  border-radius: 0;
+  box-shadow: 0 0 0 0.5px #d1d5db;
+}
+
+.dark .job-card {
+  background-color: #363636;
+  box-shadow: 0 0 0 0.5px #666666;
+}
+
+.form-field {
+  background-color: #ffffff;
+  border: none;
+  box-shadow: 0 0 0 0.5px #d1d5db;
+}
+
+.dark .form-field {
+  background-color: #363636;
+  color: #f5f5f5;
+  border: none;
+  box-shadow: 0 0 0 0.5px #666666;
+}
+
+.form-select-wrap {
+  padding-right: 12px;
+}
+
+.form-select-wrap select {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: inherit;
+  outline: none;
+}
+
+.job-card-btn {
+  box-shadow: 0 0 0 0.5px #d1d5db;
+}
+
+.dark .job-card-btn {
+  box-shadow: 0 0 0 0.5px #909090;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.pagination-pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.pagination-arrow {
+  padding: 0;
+  box-shadow: none;
+}
+
+.pagination-btn.is-active {
+  background-color: #007AFF;
+  color: #ffffff;
+  box-shadow: 0 0 0 1px #007AFF;
+}
+
+.pagination-arrow-icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.pagination-arrow:hover:not(:disabled) {
+  background-color: transparent;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dark .pagination-btn {
+  background-color: transparent;
+  color: #e5e7eb;
+  box-shadow: none;
+}
+
+.dark .pagination-arrow {
+  box-shadow: none;
+}
+
+.dark .pagination-arrow:hover:not(:disabled) {
+  background-color: transparent;
+}
+
+.dark .pagination-btn.is-active {
+  background-color: #007AFF;
+  color: #ffffff;
+  box-shadow: 0 0 0 1px #007AFF;
+}
+
+.btn-blue {
+  background-color: #007AFF;
+  color: #ffffff;
+}
+
+.dark .btn-blue {
+  background-color: #007AFF;
+  color: #ffffff;
+}
+
+/* Job card tags — no fill, colored text and a thin border */
+.job-tag-location,
+.dark .job-tag-location {
+  background-color: transparent;
+  color: #4fc3f7;
+  border: 0.5px solid #4fc3f7;
+}
+
+.job-tag-level,
+.dark .job-tag-level {
+  background-color: transparent;
+  color: #ff8a65;
+  border: 0.5px solid #ff8a65;
+}
+
+/* Clerk-style auth modal — locked so theme remaps do not invert it */
+.auth-modal {
+  background-color: #ffffff;
+  border: 1px solid #2a2a2e;
+  box-shadow: 0 16px 40px rgba(15, 15, 20, 0.28);
+}
+
+.dark .auth-modal {
+  background-color: #1c1c1e;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  border: 1px solid #111111;
+}
+
+.auth-google {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+}
+
+.dark .auth-google {
+  background-color: #2a2a2e;
+  border: 1px solid #4a4a4e;
+  color: #f5f5f5;
+}
+
+.auth-field,
+.dark .auth-modal .auth-field {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.dark .auth-modal .auth-field {
+  background-color: #2a2a2e;
+  border-color: #4a4a4e;
+  color: #f5f5f5;
+}
+
+.auth-continue {
+  background-color: #2f3037;
+  color: #ffffff;
+}
+
+.dark .auth-continue {
+  background-color: #f5f5f5;
+  color: #111111;
+}
+
+.auth-switch {
+  background-color: #f9fafb;
+}
+
+.dark .auth-switch {
+  background-color: #252528;
+}
+
+/* Resume actions keep the same colors in both themes */
+.resume-select {
+  background-color: #dbeafe;
+  color: #2563eb;
+  border: 1px solid #93c5fd;
+  border-radius: 0;
+}
+
+.dark .resume-select {
+  background-color: #dbeafe;
+  color: #2563eb;
+  border: none;
+}
+
+.resume-upload {
+  background-color: #007AFF;
+  color: #ffffff;
+  border: 1px solid #0066d6;
+  border-radius: 0;
+}
+
+.dark .resume-upload {
+  background-color: #007AFF;
+  color: #ffffff;
+  border: none;
+}
+
+.resume-save {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #4ade80;
+  border-radius: 0;
+}
+
+.dark .resume-save {
+  background-color: #dcfce7;
+  color: #166534;
+  border: none;
+}
+
+.resume-edit {
+  border: 1px solid #d1d5db;
+}
+
+.dark .resume-edit {
+  border: none;
+}

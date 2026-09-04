@@ -21,4 +21,3 @@ Open [http://localhost:5173](http://localhost:5173).
 - `/dashboard/view-applications` — Accept / reject applicants
 
 **Register** creates a demo job-seeker session. **Recruiter Login** opens the company dashboard (frontend demo, no backend).
-# InsiderJobs
