@@ -3,7 +3,7 @@ import Logo from "./Logo.jsx";
 
 const Footer = () => {
   return (
-    <footer className="app-header mt-0 border-t py-6">
+    <footer className="app-header mt-0 py-6">
       <div className="container mx-auto flex flex-col items-center justify-between gap-4 sm:flex-row">
         <div className="flex items-center gap-4">
           <Logo width={140} />

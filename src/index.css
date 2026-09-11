@@ -182,6 +182,12 @@ input[type="password"]::-webkit-strong-password-auto-fill-button {
 /* Chrome that sits above the page background */
 .app-header {
   background-color: #ffffff;
+  border: none;
+  box-shadow: inset 0 -1px 0 #b9bec5;
+}
+
+footer.app-header {
+  box-shadow: inset 0 1px 0 #b9bec5;
 }
 
 .surface-card {
@@ -192,6 +198,12 @@ input[type="password"]::-webkit-strong-password-auto-fill-button {
 
 .dark .app-header {
   background-color: #363636;
+  border: none;
+  box-shadow: inset 0 -1px 0 #6d6d6d;
+}
+
+.dark footer.app-header {
+  box-shadow: inset 0 1px 0 #6d6d6d;
 }
 
 .dark .app-sidebar {
@@ -210,10 +222,6 @@ input[type="password"]::-webkit-strong-password-auto-fill-button {
 
 .dark .surface-card :is(th, td) {
   box-shadow: inset 0 -0.2px 0 #666666;
-}
-
-.dark .app-header {
-  border-bottom: 1px solid var(--border);
 }
 
 .dark .promo-band {

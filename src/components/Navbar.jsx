@@ -18,7 +18,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <header className="app-header shadow-sm">
+    <header className="app-header">
       <div className="container mx-auto flex items-center justify-between py-4">
         <Logo onClick={() => navigate("/")} className="h-8 cursor-pointer sm:h-9" />
         {companyData ? (

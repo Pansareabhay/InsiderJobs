@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="app-header shadow py-4">
+      <div className="app-header py-4">
         <div className="px-5 flex justify-between items-center">
           <Logo onClick={() => navigate("/")} className="max-sm:w-32 cursor-pointer" />
           <div className="flex items-center gap-3">
