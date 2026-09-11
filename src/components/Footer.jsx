@@ -1,7 +1,11 @@
 import { assets } from "../assets/assets.js";
+import { useAppContext } from "../context/AppContext.jsx";
 import Logo from "./Logo.jsx";
 
 const Footer = () => {
+  const { theme } = useAppContext();
+  const isDark = theme === "dark";
+
   return (
     <footer className="app-header mt-0 py-6">
       <div className="container mx-auto flex flex-col items-center justify-between gap-4 sm:flex-row">
@@ -12,10 +16,22 @@ const Footer = () => {
             All rights reserved. Copyright @job_portal
           </p>
         </div>
-        <div className="flex gap-3">
-          <img className="icon-adaptive" width={32} src={assets.facebook_icon} alt="Facebook" />
-          <img className="icon-adaptive" width={32} src={assets.twitter_icon} alt="Twitter" />
-          <img className="icon-adaptive" width={32} src={assets.instagram_icon} alt="Instagram" />
+        <div className="flex items-center gap-4">
+          <img
+            className="social-icon"
+            src={isDark ? assets.facebook_icon_dark : assets.facebook_icon}
+            alt="Facebook"
+          />
+          <img
+            className="social-icon"
+            src={isDark ? assets.twitter_icon_dark : assets.twitter_icon}
+            alt="X"
+          />
+          <img
+            className="social-icon"
+            src={isDark ? assets.instagram_icon_dark : assets.instagram_icon}
+            alt="Instagram"
+          />
         </div>
       </div>
     </footer>

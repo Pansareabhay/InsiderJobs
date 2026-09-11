@@ -505,6 +505,12 @@ footer.app-header {
   filter: brightness(0) invert(0.85);
 }
 
+/* Footer social marks: light disc with the glyph knocked out. */
+.social-icon {
+  height: 28px;
+  width: 28px;
+}
+
 /* Native checkboxes render as dark-on-dark without this */
 .dark input[type="checkbox"] {
   accent-color: var(--blue);
