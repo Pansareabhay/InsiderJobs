@@ -6,6 +6,12 @@ import { useAppContext } from "../context/AppContext.jsx";
 const ViewApplications = () => {
   const { applicants, setApplicants } = useAppContext();
   const [openMenu, setOpenMenu] = useState(null);
+  const [query, setQuery] = useState("");
+
+  const visibleApplicants = applicants.filter((item) => {
+    const haystack = `${item.name} ${item.jobTitle} ${item.location}`.toLowerCase();
+    return haystack.includes(query.toLowerCase());
+  });
 
   const updateStatus = (id, status) => {
     setApplicants((prev) =>
@@ -17,6 +23,12 @@ const ViewApplications = () => {
 
   return (
     <div className="container mx-auto py-4">
+      <input
+        className="form-field mb-4 w-full max-w-sm rounded px-3 py-2 text-sm"
+        placeholder="Search applicants"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+      />
       <div>
         <table className="w-full bg-white border border-gray-200 max-sm:text-sm">
           <thead>
@@ -30,7 +42,7 @@ const ViewApplications = () => {
             </tr>
           </thead>
           <tbody>
-            {applicants.map((applicant, index) => (
+            {visibleApplicants.map((applicant, index) => (
               <tr key={applicant._id} className="text-gray-700">
                 <td className="py-2 px-4 border-b text-center">{index + 1}</td>
                 <td className="py-2 px-4 border-b text-center flex items-center">

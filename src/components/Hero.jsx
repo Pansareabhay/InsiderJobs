@@ -69,6 +69,20 @@ const Hero = () => {
             Search
           </button>
         </div>
+        <div className="mx-auto mt-8 grid max-w-3xl grid-cols-3 gap-3 text-white">
+          <div>
+            <p className="text-xl font-semibold sm:text-2xl">10k+</p>
+            <p className="text-[11px] opacity-80">Open jobs</p>
+          </div>
+          <div>
+            <p className="text-xl font-semibold sm:text-2xl">500+</p>
+            <p className="text-[11px] opacity-80">Companies</p>
+          </div>
+          <div>
+            <p className="text-xl font-semibold sm:text-2xl">2k+</p>
+            <p className="text-[11px] opacity-80">Hires made</p>
+          </div>
+        </div>
         </div>
         <div className="mt-16">
         <p className="text-center text-[11px] font-medium uppercase tracking-[0.2em] text-gray-700">
@@ -87,7 +101,7 @@ const Hero = () => {
                 <img
                   className={`${
                     logo.name === "Amazon"
-                      ? "max-h-5"
+                      ? "max-h-4"
                       : logo.name === "Walmart"
                         ? "max-h-6"
                         : "max-h-8"

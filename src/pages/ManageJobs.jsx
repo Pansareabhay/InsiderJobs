@@ -5,6 +5,8 @@ import { useAppContext } from "../context/AppContext.jsx";
 const ManageJobs = () => {
   const navigate = useNavigate();
   const { manageJobs, setManageJobs } = useAppContext();
+  const visibleCount = manageJobs.filter((job) => job.visible).length;
+  const applicantCount = manageJobs.reduce((sum, job) => sum + Number(job.applicants || 0), 0);
 
   const toggleVisible = (id) => {
     setManageJobs((prev) =>
@@ -14,6 +16,20 @@ const ManageJobs = () => {
 
   return (
     <div className="w-full p-4">
+      <div className="mb-4 grid gap-3 sm:grid-cols-3">
+        <div className="surface-card p-4">
+          <p className="text-xs text-gray-500">Jobs posted</p>
+          <p className="mt-1 text-2xl font-semibold">{manageJobs.length}</p>
+        </div>
+        <div className="surface-card p-4">
+          <p className="text-xs text-gray-500">Visible</p>
+          <p className="mt-1 text-2xl font-semibold">{visibleCount}</p>
+        </div>
+        <div className="surface-card p-4">
+          <p className="text-xs text-gray-500">Applicants</p>
+          <p className="mt-1 text-2xl font-semibold">{applicantCount}</p>
+        </div>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border rounded-lg max-sm:text-sm">
           <thead>

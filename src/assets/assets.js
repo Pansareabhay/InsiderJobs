@@ -1001,6 +1001,8 @@ const featuredCompanies = Object.entries(companyLogos)
 
 export const jobsData = jobsDataRaw.map((job, index) => {
     const overrideName = jobCompanyOverrides[job.title];
+    const workModes = ["Remote", "Hybrid", "On-site"];
+    const jobTypes = ["Full-time", "Internship", "Contract"];
     const company =
         overrideName && companyLogos[overrideName]
             ? {
@@ -1011,6 +1013,8 @@ export const jobsData = jobsDataRaw.map((job, index) => {
             : featuredCompanies[index % featuredCompanies.length];
     return {
         ...job,
+        workMode: workModes[index % workModes.length],
+        jobType: jobTypes[index % jobTypes.length],
         companyId: {
             ...job.companyId,
             name: company.name,

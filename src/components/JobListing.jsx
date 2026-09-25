@@ -9,6 +9,10 @@ const JobListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLocations, setSelectedLocations] = useState([]);
+  const [workMode, setWorkMode] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [minimumSalary, setMinimumSalary] = useState(0);
+  const [sortBy, setSortBy] = useState("newest");
   const [filteredJobs, setFilteredJobs] = useState(jobs);
 
   const jobsPerPage = 6;
@@ -20,24 +24,44 @@ const JobListing = () => {
       selectedLocations.length === 0 || selectedLocations.includes(job.location);
     const matchesTitle = (job) =>
       searchFilter.title === "" ||
-      job.title.toLowerCase().includes(searchFilter.title.toLowerCase());
+      job.title.toLowerCase().includes(searchFilter.title.toLowerCase()) ||
+      job.category.toLowerCase() === searchFilter.title.toLowerCase();
     const matchesSearchLocation = (job) =>
       searchFilter.location === "" ||
       job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
+    const matchesWorkMode = (job) => workMode === "" || job.workMode === workMode;
+    const matchesJobType = (job) => jobType === "" || job.jobType === jobType;
+    const matchesSalary = (job) => job.salary >= minimumSalary;
 
     const nextJobs = jobs
       .slice()
-      .reverse()
       .filter(
         (job) =>
           matchesCategory(job) &&
           matchesLocation(job) &&
           matchesTitle(job) &&
-          matchesSearchLocation(job)
-      );
+          matchesSearchLocation(job) &&
+          matchesWorkMode(job) &&
+          matchesJobType(job) &&
+          matchesSalary(job)
+      )
+      .sort((a, b) => {
+        if (sortBy === "salary") return b.salary - a.salary;
+        if (sortBy === "title") return a.title.localeCompare(b.title);
+        return b.date - a.date;
+      });
     setFilteredJobs(nextJobs);
     setCurrentPage(1);
-  }, [jobs, selectedCategories, selectedLocations, searchFilter]);
+  }, [
+    jobs,
+    selectedCategories,
+    selectedLocations,
+    searchFilter,
+    workMode,
+    jobType,
+    minimumSalary,
+    sortBy,
+  ]);
 
   const handleCategoryChange = (category) => {
     setSelectedCategories((prev) =>
@@ -94,7 +118,67 @@ const JobListing = () => {
             </div>
           )}
 
-          <div className="grid min-h-0 flex-1 grid-rows-2 gap-3">
+          <div className="grid min-h-0 flex-1 gap-3">
+            <div className="surface-card rounded-none p-3">
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="text-lg font-medium leading-6">More filters</h4>
+                {(workMode || jobType || minimumSalary > 0) && (
+                  <button
+                    type="button"
+                    className="text-xs font-medium text-primary"
+                    onClick={() => {
+                      setWorkMode("");
+                      setJobType("");
+                      setMinimumSalary(0);
+                    }}
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
+              <div className="mt-3 space-y-3">
+                <label className="block text-xs font-medium text-gray-500">
+                  Work mode
+                  <select
+                    className="filter-select mt-1 w-full rounded px-3 py-2 text-sm"
+                    value={workMode}
+                    onChange={(event) => setWorkMode(event.target.value)}
+                  >
+                    <option value="">Any work mode</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="On-site">On-site</option>
+                  </select>
+                </label>
+                <label className="block text-xs font-medium text-gray-500">
+                  Job type
+                  <select
+                    className="filter-select mt-1 w-full rounded px-3 py-2 text-sm"
+                    value={jobType}
+                    onChange={(event) => setJobType(event.target.value)}
+                  >
+                    <option value="">Any job type</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Contract">Contract</option>
+                  </select>
+                </label>
+                <label className="block text-xs font-medium text-gray-500">
+                  Minimum salary
+                  <select
+                    className="filter-select mt-1 w-full rounded px-3 py-2 text-sm"
+                    value={minimumSalary}
+                    onChange={(event) => setMinimumSalary(Number(event.target.value))}
+                  >
+                    <option value={0}>Any salary</option>
+                    <option value={60000}>$60k+</option>
+                    <option value={80000}>$80k+</option>
+                    <option value={100000}>$100k+</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
             <div className="surface-card flex h-full flex-col overflow-hidden rounded-none p-3">
               <h4 className="text-lg font-medium leading-6">Search by Categories</h4>
               <ul className="mt-3 space-y-3 text-gray-600">
@@ -133,9 +217,23 @@ const JobListing = () => {
       </aside>
 
       <section className="surface-card min-w-0 w-full rounded-none p-3 text-gray-800">
-        <h3 className="text-lg font-medium leading-6" id="job-list">
-          Latest jobs
-        </h3>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-lg font-medium leading-6" id="job-list">
+            Latest jobs
+          </h3>
+          <div className="flex items-center gap-3">
+            <select
+              className="filter-select rounded px-2 py-1 text-xs"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value)}
+            >
+              <option value="newest">Newest</option>
+              <option value="salary">Salary</option>
+              <option value="title">Title</option>
+            </select>
+            <span className="text-xs text-gray-500">{filteredJobs.length} results</span>
+          </div>
+        </div>
         <p className="mt-1 text-sm text-gray-500">Get your desired job from top companies</p>
         <div className="mt-3 grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {filteredJobs
@@ -144,6 +242,16 @@ const JobListing = () => {
               <JobCard key={index} job={job} />
             ))}
         </div>
+
+        {filteredJobs.length === 0 && (
+          <div className="flex min-h-64 flex-col items-center justify-center px-4 text-center">
+            <div className="empty-state-icon">⌕</div>
+            <h4 className="mt-4 text-lg font-medium">No matching jobs</h4>
+            <p className="mt-1 max-w-sm text-sm text-gray-500">
+              Try a different salary, work mode, category, or location.
+            </p>
+          </div>
+        )}
 
         {filteredJobs.length > 0 && (
           <nav className="pagination mt-6" aria-label="Job list pages">

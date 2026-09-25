@@ -24,6 +24,8 @@ const AddJob = () => {
       category,
       salary: Number(salary),
       date: Date.now(),
+      workMode: "On-site",
+      jobType: "Full-time",
       description: `<p>${description}</p>`,
       companyId: {
         _id: "company-1",

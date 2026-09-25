@@ -15,6 +15,20 @@ export const AppContextProvider = ({ children }) => {
   );
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user") || "null"));
   const [appliedJobs, setAppliedJobs] = useState(jobsApplied);
+  const [savedJobIds, setSavedJobIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("savedJobIds") || "[]");
+    } catch {
+      return [];
+    }
+  });
+  const [jobAlerts, setJobAlerts] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("jobAlerts") || "[]");
+    } catch {
+      return [];
+    }
+  });
   const [manageJobs, setManageJobs] = useState(
     manageJobsData.map((job) => ({ ...job, visible: true }))
   );
@@ -34,6 +48,37 @@ export const AppContextProvider = ({ children }) => {
   }, [theme]);
 
   const toggleTheme = () => setTheme((current) => (current === "dark" ? "light" : "dark"));
+
+  useEffect(() => {
+    localStorage.setItem("savedJobIds", JSON.stringify(savedJobIds));
+  }, [savedJobIds]);
+
+  useEffect(() => {
+    localStorage.setItem("jobAlerts", JSON.stringify(jobAlerts));
+  }, [jobAlerts]);
+
+  const toggleSavedJob = (jobId) => {
+    setSavedJobIds((current) =>
+      current.includes(jobId)
+        ? current.filter((id) => id !== jobId)
+        : [...current, jobId]
+    );
+  };
+
+  const addJobAlert = (alert) => {
+    const nextAlert = {
+      id: Date.now().toString(),
+      title: alert.title.trim(),
+      location: alert.location.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    setJobAlerts((current) => [nextAlert, ...current]);
+    return nextAlert;
+  };
+
+  const removeJobAlert = (alertId) => {
+    setJobAlerts((current) => current.filter((item) => item.id !== alertId));
+  };
 
   const loginRecruiter = (email) => {
     const data = { name: email.split("@")[0] || "Recruiter", email };
@@ -82,6 +127,11 @@ export const AppContextProvider = ({ children }) => {
       logoutUser,
       appliedJobs,
       setAppliedJobs,
+      savedJobIds,
+      toggleSavedJob,
+      jobAlerts,
+      addJobAlert,
+      removeJobAlert,
       manageJobs,
       setManageJobs,
       applicants,
@@ -99,6 +149,8 @@ export const AppContextProvider = ({ children }) => {
       companyData,
       user,
       appliedJobs,
+      savedJobIds,
+      jobAlerts,
       manageJobs,
       applicants,
       theme,

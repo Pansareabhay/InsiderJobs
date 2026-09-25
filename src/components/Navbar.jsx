@@ -16,11 +16,34 @@ const Navbar = () => {
     logoutRecruiter,
   } = useAppContext();
   const [showMenu, setShowMenu] = useState(false);
+  const [showNav, setShowNav] = useState(false);
+
+  const navLinks = (
+    <>
+      <Link to="/" onClick={() => setShowNav(false)}>Jobs</Link>
+      <Link to="/companies" onClick={() => setShowNav(false)}>Companies</Link>
+      <Link to="/saved-jobs" onClick={() => setShowNav(false)}>Saved Jobs</Link>
+      <Link to="/job-alerts" onClick={() => setShowNav(false)}>Job Alerts</Link>
+      <Link to="/about" onClick={() => setShowNav(false)}>About</Link>
+    </>
+  );
 
   return (
     <header className="app-header">
       <div className="container mx-auto flex items-center justify-between py-4">
         <Logo onClick={() => navigate("/")} className="h-8 cursor-pointer sm:h-9" />
+        <nav className="hidden items-center gap-5 text-sm text-gray-600 md:flex">
+          {navLinks}
+        </nav>
+        <div className="flex items-center gap-3">
+        <button
+          type="button"
+          className="md:hidden rounded px-2 py-1 text-lg"
+          onClick={() => setShowNav((open) => !open)}
+          aria-label="Open menu"
+        >
+          {showNav ? "✕" : "☰"}
+        </button>
         {companyData ? (
           <div className="relative flex items-center gap-4">
             <ThemeToggle />
@@ -78,6 +101,15 @@ const Navbar = () => {
                 </button>
                 <button
                   onClick={() => {
+                    navigate("/job-alerts");
+                    setShowMenu(false);
+                  }}
+                  className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-50"
+                >
+                  Job Alerts
+                </button>
+                <button
+                  onClick={() => {
                     logoutUser();
                     setShowMenu(false);
                   }}
@@ -105,7 +137,13 @@ const Navbar = () => {
             </button>
           </div>
         )}
+        </div>
       </div>
+      {showNav && (
+        <div className="container mx-auto flex flex-col gap-3 pb-4 text-sm text-gray-600 md:hidden">
+          {navLinks}
+        </div>
+      )}
     </header>
   );
 };

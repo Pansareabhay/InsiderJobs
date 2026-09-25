@@ -9,7 +9,11 @@ const Applications = () => {
   const { appliedJobs, setAppliedJobs, user, theme } = useAppContext();
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("All");
   const fileRef = useRef(null);
+  const visibleApplied = appliedJobs.filter(
+    (job) => statusFilter === "All" || job.status === statusFilter
+  );
 
   const statusClass = {
     Pending: "text-blue-600",
@@ -86,7 +90,19 @@ const Applications = () => {
           )}
         </div>
 
-        <h2 className="text-xl font-semibold mb-4">Jobs Applied</h2>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-xl font-semibold">Jobs Applied</h2>
+          <select
+            className="filter-select rounded px-3 py-2 text-sm"
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value)}
+          >
+            <option value="All">All statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
         {!user && (
           <p className="mb-4 text-sm text-gray-500">
             Login from the header to start applying. Sample applications are shown below.
@@ -103,7 +119,7 @@ const Applications = () => {
             </tr>
           </thead>
           <tbody>
-            {appliedJobs.map((job, index) => (
+            {visibleApplied.map((job, index) => (
               <tr key={index}>
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-2">
@@ -111,7 +127,7 @@ const Applications = () => {
                     <img
                       className={`company-logo${
                         job.company === "Amazon"
-                          ? " company-logo-sm"
+                          ? " company-logo-amazon"
                           : job.company === "Walmart"
                             ? " company-logo-walmart"
                             : job.company === "Microsoft"

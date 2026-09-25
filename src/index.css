@@ -499,10 +499,223 @@ footer.app-header {
   max-width: 72px;
 }
 
+.company-logo-amazon {
+  height: 8px;
+  max-width: 36px;
+}
+
+.job-card .company-logo-amazon {
+  height: 12px;
+  max-width: 46px;
+}
+
 /* Monochrome UI icons are near-black SVGs, so flatten and lighten
    them. Multi-colour brand logos are deliberately left untouched. */
 .dark .icon-adaptive {
   filter: brightness(0) invert(0.85);
+}
+
+.save-job-btn {
+  display: inline-flex;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #6b7280;
+  box-shadow: 0 0 0 0.5px #d1d5db;
+  transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.save-job-btn:hover {
+  color: #007aff;
+  transform: translateY(-1px);
+}
+
+.save-job-btn svg {
+  height: 17px;
+  width: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+.save-job-btn.is-saved {
+  background-color: #e8f3ff;
+  color: #007aff;
+}
+
+.save-job-btn.is-saved svg {
+  fill: currentColor;
+}
+
+.dark .save-job-btn {
+  box-shadow: 0 0 0 0.5px #666666;
+}
+
+.dark .save-job-btn.is-saved {
+  background-color: #12304a;
+}
+
+.meta-tag {
+  color: #4b5563;
+  box-shadow: 0 0 0 0.5px #d1d5db;
+}
+
+.dark .meta-tag {
+  color: #c7c7c7;
+  box-shadow: 0 0 0 0.5px #666666;
+}
+
+.filter-select {
+  border: none;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 0.5px #d1d5db;
+  outline: none;
+}
+
+.filter-select:focus {
+  box-shadow: 0 0 0 1px #007aff;
+}
+
+.dark .filter-select {
+  background-color: #2b2b2b;
+  box-shadow: 0 0 0 0.5px #666666;
+}
+
+.empty-state-icon {
+  display: inline-flex;
+  height: 52px;
+  width: 52px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #eef6ff;
+  color: #007aff;
+  font-size: 25px;
+}
+
+.dark .empty-state-icon {
+  background-color: #12304a;
+  color: #4fc3f7;
+}
+
+.company-card {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.company-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
+}
+
+.dark .company-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.company-logo-panel,
+.company-profile-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+
+.company-logo-panel {
+  height: 36px;
+  width: 100%;
+}
+
+.company-logo-panel img {
+  max-height: 32px;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+.company-logo-panel img.company-logo-amazon {
+  height: auto;
+  max-height: 22px;
+  max-width: 88px;
+}
+
+.company-profile-logo {
+  height: auto;
+  width: auto;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.company-profile-logo img {
+  max-height: 44px;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+.company-profile-logo img.company-logo-amazon {
+  height: auto;
+  max-height: 32px;
+  max-width: 110px;
+}
+
+.how-it-works {
+  background-color: #f7faff;
+}
+
+.dark .how-it-works {
+  background-color: #202020;
+}
+
+.step-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.step-number {
+  display: inline-flex;
+  height: 38px;
+  min-width: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #e8f3ff;
+  color: #007aff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dark .step-number {
+  background-color: #12304a;
+  color: #4fc3f7;
+}
+
+.hot-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  color: #ea580c;
+  border: none;
+  box-shadow: 0 0 0 0.5px #ea580c;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.dark .hot-badge {
+  background-color: transparent;
+  color: #ffb38a;
+  box-shadow: 0 0 0 0.5px #ffb38a;
+}
+
+.job-detail-hero {
+  box-shadow: 0 0 0 0.5px #93c5fd;
+}
+
+.dark .job-detail-hero {
+  box-shadow: 0 0 0 0.5px #1a4a5c;
 }
 
 /* Footer social marks: light disc with the glyph knocked out. */
@@ -542,16 +755,35 @@ footer.app-header {
   box-shadow: 0 0 0 0.5px #666666;
 }
 
-.form-select-wrap {
-  padding-right: 12px;
-}
-
 .form-select-wrap select {
-  background: transparent;
+  background-color: transparent;
   border: none;
   box-shadow: none;
   color: inherit;
   outline: none;
+}
+
+/* Browsers pin the native select arrow to the right border, so draw our own
+   chevron instead and inset it from the edge. */
+select.filter-select,
+.form-select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='8'%20viewBox='0%200%2012%208'%20fill='none'%3E%3Cpath%20d='M1%201.5L6%206.5L11%201.5'%20stroke='%236B7280'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 8px;
+  padding-right: 2.25rem;
+}
+
+.dark select.filter-select,
+.dark .form-select-wrap select {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='8'%20viewBox='0%200%2012%208'%20fill='none'%3E%3Cpath%20d='M1%201.5L6%206.5L11%201.5'%20stroke='%23C7C7C7'%20stroke-width='1.8'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+select.filter-select.text-xs {
+  background-position: right 8px center;
+  padding-right: 1.75rem;
 }
 
 .job-card-btn {
