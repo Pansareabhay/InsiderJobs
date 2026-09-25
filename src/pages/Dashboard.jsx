@@ -22,17 +22,23 @@ const Dashboard = () => {
                 <div className="relative group">
                   <img
                     className="h-9 w-9 rounded-full border object-cover"
-                    src={assets.profile_img}
+                    src={companyData.avatar || assets.profile_img}
                     alt="profile"
                   />
                   <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12">
                     <ul className="list-none m-0 p-2 bg-white rounded-md border text-sm shadow">
                       <li
+                        onClick={() => navigate("/settings")}
+                        className="cursor-pointer px-2 py-1 pr-10"
+                      >
+                        Settings
+                      </li>
+                      <li
                         onClick={() => {
                           logoutRecruiter();
                           navigate("/");
                         }}
-                        className="py-1 px-2 cursor-pointer pr-10"
+                        className="cursor-pointer px-2 py-1 pr-10 text-red-500"
                       >
                         Logout
                       </li>

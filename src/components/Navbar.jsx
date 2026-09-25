@@ -52,7 +52,11 @@ const Navbar = () => {
             </Link>
             <p className="hidden max-sm:hidden text-gray-700">Hi, {companyData.name}</p>
             <button onClick={() => setShowMenu((open) => !open)} className="rounded-full">
-              <img className="h-9 w-9 rounded-full border object-cover" src={assets.profile_img} alt="profile" />
+              <img
+                className="h-9 w-9 rounded-full border object-cover"
+                src={companyData.avatar || assets.profile_img}
+                alt="profile"
+              />
             </button>
             {showMenu && (
               <div className="absolute right-0 top-12 z-20 w-40 rounded-md border bg-white py-2 shadow-lg">
@@ -64,6 +68,15 @@ const Navbar = () => {
                   className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-50"
                 >
                   Dashboard
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/settings");
+                    setShowMenu(false);
+                  }}
+                  className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-50"
+                >
+                  Settings
                 </button>
                 <button
                   onClick={() => {
@@ -86,7 +99,11 @@ const Navbar = () => {
             </Link>
             <p className="hidden max-sm:hidden text-gray-700">Hi, {user.name}</p>
             <button onClick={() => setShowMenu((open) => !open)} className="rounded-full">
-              <img className="h-9 w-9 rounded-full border object-cover" src={assets.profile_img} alt="profile" />
+              <img
+                className="h-9 w-9 rounded-full border object-cover"
+                src={user.avatar || assets.profile_img}
+                alt="profile"
+              />
             </button>
             {showMenu && (
               <div className="absolute right-0 top-12 z-20 w-40 rounded-md border bg-white py-2 shadow-lg">
@@ -98,6 +115,15 @@ const Navbar = () => {
                   className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-50"
                 >
                   My Profile
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/settings");
+                    setShowMenu(false);
+                  }}
+                  className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-50"
+                >
+                  Settings
                 </button>
                 <button
                   onClick={() => {

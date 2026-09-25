@@ -17,6 +17,7 @@ import Home from "./pages/Home.jsx";
 import ManageJobs from "./pages/ManageJobs.jsx";
 import SavedJobs from "./pages/SavedJobs.jsx";
 import JobAlerts from "./pages/JobAlerts.jsx";
+import Settings from "./pages/Settings.jsx";
 import ViewApplications from "./pages/ViewApplications.jsx";
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<ManageJobs />} />
           <Route path="add-job" element={<AddJob />} />

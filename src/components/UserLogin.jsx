@@ -19,7 +19,7 @@ const UserLogin = () => {
     event.preventDefault();
     const displayName =
       `${firstName} ${lastName}`.trim() || email.split("@")[0] || "Richard";
-    registerUser(displayName);
+    registerUser(displayName, email);
     setShowUserLogin(false);
     toast.success(isLogin ? "Signed in" : "Account created");
   };

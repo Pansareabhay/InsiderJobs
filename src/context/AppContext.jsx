@@ -3,17 +3,24 @@ import { jobsApplied, jobsData, manageJobsData, viewApplicationsPageData } from 
 
 const AppContext = createContext(null);
 
+const readSessionJson = (key, fallback) => {
+  try {
+    const stored = sessionStorage.getItem(key);
+    return stored ? JSON.parse(stored) : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
 export const AppContextProvider = ({ children }) => {
   const [searchFilter, setSearchFilter] = useState({ title: "", location: "" });
   const [isSearched, setIsSearched] = useState(false);
   const [jobs, setJobs] = useState(jobsData);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
-  const [companyToken, setCompanyToken] = useState(localStorage.getItem("companyToken") || "");
-  const [companyData, setCompanyData] = useState(
-    JSON.parse(localStorage.getItem("companyData") || "null")
-  );
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user") || "null"));
+  const [companyToken, setCompanyToken] = useState(sessionStorage.getItem("companyToken") || "");
+  const [companyData, setCompanyData] = useState(() => readSessionJson("companyData", null));
+  const [user, setUser] = useState(() => readSessionJson("user", null));
   const [appliedJobs, setAppliedJobs] = useState(jobsApplied);
   const [savedJobIds, setSavedJobIds] = useState(() => {
     try {
@@ -57,6 +64,13 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("jobAlerts", JSON.stringify(jobAlerts));
   }, [jobAlerts]);
 
+  // Drop leftover login from previous visits so closing the site logs out.
+  useEffect(() => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("companyToken");
+    localStorage.removeItem("companyData");
+  }, []);
+
   const toggleSavedJob = (jobId) => {
     setSavedJobIds((current) =>
       current.includes(jobId)
@@ -84,26 +98,44 @@ export const AppContextProvider = ({ children }) => {
     const data = { name: email.split("@")[0] || "Recruiter", email };
     setCompanyToken("demo-token");
     setCompanyData(data);
-    localStorage.setItem("companyToken", "demo-token");
-    localStorage.setItem("companyData", JSON.stringify(data));
+    sessionStorage.setItem("companyToken", "demo-token");
+    sessionStorage.setItem("companyData", JSON.stringify(data));
   };
 
   const logoutRecruiter = () => {
     setCompanyToken("");
     setCompanyData(null);
-    localStorage.removeItem("companyToken");
-    localStorage.removeItem("companyData");
+    sessionStorage.removeItem("companyToken");
+    sessionStorage.removeItem("companyData");
   };
 
-  const registerUser = (name) => {
-    const nextUser = { name };
+  const registerUser = (name, email = "") => {
+    const nextUser = { name, email };
     setUser(nextUser);
-    localStorage.setItem("user", JSON.stringify(nextUser));
+    sessionStorage.setItem("user", JSON.stringify(nextUser));
   };
 
   const logoutUser = () => {
     setUser(null);
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
+  };
+
+  const updateUser = (patch) => {
+    setUser((current) => {
+      if (!current) return current;
+      const next = { ...current, ...patch };
+      sessionStorage.setItem("user", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const updateCompanyData = (patch) => {
+    setCompanyData((current) => {
+      if (!current) return current;
+      const next = { ...current, ...patch };
+      sessionStorage.setItem("companyData", JSON.stringify(next));
+      return next;
+    });
   };
 
   const value = useMemo(
@@ -125,6 +157,8 @@ export const AppContextProvider = ({ children }) => {
       user,
       registerUser,
       logoutUser,
+      updateUser,
+      updateCompanyData,
       appliedJobs,
       setAppliedJobs,
       savedJobIds,
